@@ -1,15 +1,13 @@
 //install packages
 const express = require("express");
 const app = express();
-const exphbs = require("express-handlebars") 
+
 
 //set PORT
 const PORT = process.env.PORT || 3000;
 
 const db = require("./models");
-//set handlebars
-app.engine("handlebars", exphbs({ defaultLayout: "main"}));
-app.set("view engine", "handlebars");
+
 
 //parser
 app.use(express.urlencoded({ extended: true}));
