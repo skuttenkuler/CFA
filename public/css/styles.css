@@ -1,5 +1,40 @@
-body{
+
+/* index.html */
+.welcome{
     
     background-image: url("../assets/images/Screen\ Shot\ 2020-02-05\ at\ 10.03.27\ PM.png");
     background-size: cover;
+}
+.login{
+    margin-top: 80px;
+    margin-left: 20px;
+    border-radius: 15px;
+}
+.login h2, label{
+    color: rgb(145, 196, 255);
+}
+/* userSignUp */
+.userSignup{
+    background-image: url("../assets/images/concert.png");
+    background-size: cover;
+   
+}
+.userSignup h2, label{
+    color: rgb(145, 196, 255);
+   
+}
+
+/* registerArtist */
+.artistReg{
+    background-image: url("../assets/images/cassettes.jpg");
+    background-size: cover;
+}
+.center-div{
+    margin: auto 0;
+    width: 80%;
+    
+}
+
+.artistReg h2, label{
+    color: rgb(145, 196, 255);
 }
