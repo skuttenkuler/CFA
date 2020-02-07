@@ -1,12 +1,14 @@
 $(document).ready(function(){
     //ARTIST
     const artistBtn =$('#artist-btn');
+    const artistType = $('#artist-type');
     const artistEmail = $('#artist-email');
     const artistPass = $('#artist-pass');
     const artistName = $('#artist-name');
 
     //USER
     const userBtn =$('#user-btn');
+    const userType = $('#user-type');
     const userEmail = $('#user-email');
     const userPass = $('#user-pass');
     const userName = $('#user-username');
@@ -27,6 +29,7 @@ function handleArtistRegister(event){
     }
     $.ajax('api/artists/register', {
         data: {
+            type: artistType.val().trim(),
             email: artistEmail.val().trim(),
             password: artistPass.val().trim(),
             name: artistName.val().trim()
@@ -44,6 +47,7 @@ function handleUserRegister(event){
     }
     $.ajax('api/users/register', {
         data: {
+            type: userType.val().trim(),
             email: userEmail.val().trim(),
             password: userPass.val().trim(),
             username: userName.val().trim()

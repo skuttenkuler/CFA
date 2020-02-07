@@ -1,4 +1,5 @@
 const db = require('../models');
+var bcrypt = require('bcryptjs');
 const passport = require('passport');
 const path = require('path');
 
@@ -16,7 +17,7 @@ app.post("/api/users/register", (req, res) => {
         email:req.body.email,
         password: req.body.password
     })
-    console.log(newUser)
+    console.log(User)
     //validation
     req.checkBody('email','Email is Required').notEmpty();
     req.checkBody('password','Password is Required').notEmpty();
@@ -27,10 +28,10 @@ app.post("/api/users/register", (req, res) => {
     } else {
         //hash password for security
         bcrypt.genSalt(10, function(err,  salt){
-            bcrypt.hash(newUser.password, salt, function(err, hash){
+            bcrypt.hash(db.User.password, salt, function(err, hash){
                 if(!err){
-                    newUser.password = hash;
-                } newUser.save(function(err){
+                    db.User.password = hash;
+                } db.User.save(function(err){
                     if(!err){
                         console.log("successful register")
                         res.redirect('/login')
@@ -45,6 +46,7 @@ app.post("/api/artists/register", (req, res) => {
 
         //add new Artist
         db.Artist.create({
+            type: req.body.type,
             name: req.body.name,
             email: req.body.email,
             password: req.body.password
@@ -59,10 +61,10 @@ app.post("/api/artists/register", (req, res) => {
         } else{
             //hash password
             bcrypt.genSalt(10, function(err, salt){
-                bcrypt.hash(newArtist.password, salt, function(err, hash){
+                bcrypt.hash(db.Artist.password, salt, function(err, hash){
                     if(!err){
-                        newArtist.password = hash;
-                    } newArtist.save(function(err){
+                        db.Artist.password = hash;
+                    } db.Artist.sync(function(err){
                         if(!err){
                             console.log("successful register")
                             res.redirect('/login')
