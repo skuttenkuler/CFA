@@ -1,10 +1,10 @@
-var passport = require("passport");
-var LocalStrategy  = require("passport-local").Strategy;
+var passport = require("passport")
+,  LocalStrategy  = require("passport-local").Strategy;
 
 var db = require("../models/");
 
 //passport validation and authentication
-passport.use('api/users/login', new LocalStrategy(function(email, password, cb){
+passport.use('user', new LocalStrategy(function(email, password, cb){
     var query = {email: email};
     db.User.findOne(query, function(err, user){
         if(err) throw err;
@@ -21,7 +21,7 @@ passport.use('api/users/login', new LocalStrategy(function(email, password, cb){
         })
     })
 }))
-passport.use('api/artists/login', new LocalStrategy(function(email, password, done){
+passport.use('local-artist', new LocalStrategy(function(email, password, done){
     var query = {email:email};
     db.Artist.findOne(query, function(err, artist){
         if(err) throw err;

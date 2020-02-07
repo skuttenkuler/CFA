@@ -74,5 +74,9 @@ app.post("/api/artists/register", (req, res) => {
             })
         }
     });
-
+    //login artist
+    app.post("api/artists/login", passport.authenticate('local-artist', { successRedirect: '/admin',
+                                                                            failureRedirect: '/',
+                                                                            failureFlash: true })
+    );                                                        
 }

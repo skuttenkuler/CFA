@@ -1,4 +1,5 @@
 $(document).ready(function(){
+   
     //ARTIST
     const artistBtn =$('#artist-btn');
     const artistType = $('#artist-type');
@@ -72,9 +73,9 @@ function handleArtistLogin(event){
         type: "POST"
     }).then(
         function(response) {
-            if(response) {
-                console.log(response);
-                return
+            if(response.name) {
+                console.log("logged in");
+                location.replace('/admin')
             }
         });
     }
