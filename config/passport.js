@@ -13,13 +13,15 @@ app.post("/register", (req, res) => {
         email:req.body.email,
         password: req.body.password
     })
+
     req.checkBody('email','Email is Required').notEmpty();
     req.checkBody('password','Password is Required').notEmpty();
-    err = req.validationErrors();
-    if(err){
+    error = req.validationErrors();
+    
+    if(error){
         res.render({errors:err});
     } else {
-        bcrypt.genSalt(10, funtion(err, salt){
+        bcrypt.genSalt(10, function(err,  salt){
             bcrypt.hash(newUser.password, salt, function(err, hash){
                 if(!err){
                     newUser.password = hash;
@@ -44,7 +46,7 @@ app.post("/register", (req, res) => {
         if(err){
             res.render({errors:err});
         } else{
-            bcrypt.genSalt(10, funtion(err, salt){
+            bcrypt.genSalt(10, function(err, salt){
                 bcrypt.hash(newArtist.password, salt, function(err, hash){
                     if(!err){
                         newArtist.password = hash;
@@ -61,24 +63,24 @@ app.post("/register", (req, res) => {
 })
 
 //passport validation and authentication
-passport.use('user', new LocalStrategy(function(email, password, done){
+passport.use('user', new LocalStrategy(function(email, password, cb){
     var query = {email: email};
     User.findOne(query, function(err, user){
         if(err) throw err;
         if(!user){
-            return done(null, false);
+            return cb(null, false);
         }
         bcrypt.compare(password, user.password,  function(err,result){
             if(err) throw err;
             if(result){
-                return done(null, user);
+                return cb(null, user);
             } else{
-                return done(null, false)
+                return cb(null, false)
             }
         })
     })
 }))
-passport.use('artist', new LocalStrategy(function(email, password, done){
+passport.use('/artist', new LocalStrategy(function(email, password, done){
     var query = {email:email};
     Artist.findOne(query, function(err, artist){
         if(err) throw err;
@@ -90,7 +92,7 @@ passport.use('artist', new LocalStrategy(function(email, password, done){
             if(result){
                 return done(null, artist);
             } else{
-                return done(null, false)
+                return cb(null, false)
             }
         })
     })
@@ -102,7 +104,32 @@ passport.serializeUser(function(user, cb){
  });
  
  passport.deserializeUser(function(obj, cb){
-     cb(null, obj)
+     switch (obj.type){
+         case 'user':
+             User.findOneById(obj.id).then(
+                 user => {
+                     if(user){
+                         cb(null, user);
+                     } else{
+                         cb(new Error('user not found:' + obj.email, null));
+                     }
+                 });
+                break;
+        case 'artist':
+            Artist.findOneById(obj.id).then(
+                artist => {
+                    if(artist){
+                        cd(null, artist);
+                    } else{
+                        cb(new Error('artist not found:' + obj.email, null));
+                    }
+                });
+                break;
+            default:
+                cb(new Error('no record type:', obj.type), null);
+                break;
+             
+     }
  });
  
  module.exports = passport;

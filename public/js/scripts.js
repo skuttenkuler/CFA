@@ -7,8 +7,9 @@ UserForm.on("click", (event) => {
     event.preventDefault();
 
 });
-ArtistForm.on("click", (event) => {
-    console.log("clicked")
+ArtistForm.submit((event) => {
     event.preventDefault();
+    
+    console.log("submited?")
 
 });
