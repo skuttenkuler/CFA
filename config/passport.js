@@ -4,8 +4,10 @@ var passport = require("passport")
 var db = require("../models/");
 
 //passport validation and authentication
-passport.use('user', new LocalStrategy(function(email, password, cb){
+passport.use('user', new LocalStrategy({
+    }, function(email, password, cb){
     var query = {email: email};
+    console.log(query)
     db.User.findOne(query, function(err, user){
         if(err) throw err;
         if(!user){
@@ -23,6 +25,7 @@ passport.use('user', new LocalStrategy(function(email, password, cb){
 }))
 passport.use('local-artist', new LocalStrategy(function(email, password, done){
     var query = {email:email};
+    console.log(query)
     db.Artist.findOne(query, function(err, artist){
         if(err) throw err;
         if(!artist){

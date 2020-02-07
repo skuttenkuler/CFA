@@ -64,7 +64,7 @@ function handleArtistLogin(event){
         alert("Please fill out all fields");
         return
     }
-    $.ajax('api/artists/login', {
+    $.ajax('/api/artists/login', {
         data: {
             email: loginEmail.val().trim(),
             password: loginPass.val().trim(),

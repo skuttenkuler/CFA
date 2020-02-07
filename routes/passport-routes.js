@@ -1,6 +1,6 @@
 const db = require('../models');
 var bcrypt = require('bcryptjs');
-const passport = require('passport');
+const passport = require('../config/passport');
 const path = require('path');
 
 
@@ -75,8 +75,15 @@ app.post("/api/artists/register", (req, res) => {
         }
     });
     //login artist
-    app.post("api/artists/login", passport.authenticate('local-artist', { successRedirect: '/admin',
-                                                                            failureRedirect: '/',
-                                                                            failureFlash: true })
+    app.post("/api/artists/login", 
+        passport.authenticate('local-artist', 
+            {   successRedirect: '/admin', failureRedirect: '/'}),
+            function(req, res){
+                console.log(res)
+                res.json({  id: req.artist.id, 
+                            name: req.artist.name})
+            }
+
+                                                                            
     );                                                        
 }
