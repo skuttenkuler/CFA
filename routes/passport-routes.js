@@ -46,7 +46,7 @@ app.post("/api/artists/register", (req, res) => {
         //add new Artist
         db.Artist.create({
             name: req.body.name,
-            email: req.boy.email,
+            email: req.body.email,
             password: req.body.password
         })
         //validate

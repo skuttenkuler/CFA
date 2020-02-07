@@ -4,6 +4,7 @@ const app = express();
 const session = require('express-session')
 const passport = require('passport')
 const bodyParser = require('body-parser')
+var expressValidator = require('express-validator');
 
 //set PORT
 const PORT = process.env.PORT || 3000;
@@ -14,6 +15,8 @@ const db = require("./models");
 //parser
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
+app.use(expressValidator());
+
 
 //use static files
 app.use(express.static("public"));
@@ -25,7 +28,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //ROUTES
 require('./routes/html-routes')(app)
-require("./routes/api-routes.js")(app);
+require('./routes/api-routes.js')(app);
+require('./routes/passport-routes')(app)
 
 
 db.sequelize.sync().then(function() {
