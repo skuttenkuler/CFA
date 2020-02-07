@@ -41,7 +41,7 @@ function handleArtistRegister(event){
 function handleUserRegister(event){
     console.log("clicked")
     event.preventDefault();
-    if(!artistEmail || !artistPass || !artistName){
+    if(!userEmail || !userPass || !userName){
         alert("Please fill out all fields");
         return
     }
