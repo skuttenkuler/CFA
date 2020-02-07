@@ -9,7 +9,7 @@ const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 3000;
 
 const db = require("./models");
-require('./config/passport')(passport)
+
 
 //parser
 app.use(express.urlencoded({ extended: true}));
@@ -26,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //ROUTES
 require('./routes/html-routes')(app)
 require("./routes/api-routes.js")(app);
+
 
 db.sequelize.sync().then(function() {
     app.listen(PORT, function() {
