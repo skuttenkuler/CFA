@@ -43,14 +43,9 @@ app.post("/api/users/register", (req, res) => {
     });
     
 app.post("/api/artists/register", (req, res) => {
-
+    //req.body pass hash the create and the pass == hashed password
         //add new Artist
-        db.Artist.create({
-            type: req.body.type,
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password
-        })
+        
         //validate
         req.checkBody('name','Name is Required').notEmpty();
         req.checkBody('email','Email is Required').notEmpty();
@@ -61,25 +56,28 @@ app.post("/api/artists/register", (req, res) => {
         } else{
             //hash password
             bcrypt.genSalt(10, function(err, salt){
-                bcrypt.hash(db.Artist.password, salt, function(err, hash){
+                bcrypt.hash(req.body.password, salt, function(err, hash){
                     if(!err){
-                        db.Artist.password = hash;
-                    } db.Artist.sync(function(err){
-                        if(!err){
-                            console.log("successful register")
-                            res.redirect('/login')
-                        }
-                    })
+                      
+                     db.Artist.create({
+                        type: req.body.type,
+                        name: req.body.name,
+                        email: req.body.email,
+                        password: hash
+                    })} else {
+                        throw err
+                    }
                 })
             })
         }
     });
+    
     //login artist
     app.post("/api/artists/login", 
         passport.authenticate('local-artist', 
             {   successRedirect: '/admin', failureRedirect: '/'}),
             function(req, res){
-                console.log(res)
+                console.log(req)
                 res.json({  id: req.artist.id, 
                             name: req.artist.name})
             }
