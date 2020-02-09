@@ -8,7 +8,7 @@ const path = require('path');
 module.exports = app => {
 //register users
 app.post("/api/users/register", (req, res) => {
-    console.log(req.body)
+    //console.log(req.body)
     
     //set new User
     db.User.create({
@@ -75,11 +75,15 @@ app.post("/api/artists/register", (req, res) => {
     //login artist
     app.post("/api/artists/login", 
         passport.authenticate('local-artist', 
-            {   successRedirect: '/admin', failureRedirect: '/'}),
+            { failureRedirect: '/', session:true}),
             function(req, res){
-                console.log(req)
-                res.json({  id: req.artist.id, 
-                            name: req.artist.name})
+                console.log(req.session.user.name)
+                req.session.save(() => {
+                    console.log("rediredct")
+                    res.redirect("/admin")
+
+                })
+              
             }
 
                                                                             

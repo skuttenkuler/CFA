@@ -73,7 +73,7 @@ function handleArtistLogin(event){
         type: "POST"
     }).then(
         function(response) {
-            if(response.name) {
+            if(response) {
                 console.log("logged in");
                 location.replace('/admin')
             }

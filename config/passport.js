@@ -7,7 +7,7 @@ var db = require("../models/");
 passport.use('user', new LocalStrategy({
     }, function(email, password, done){
     var query = {email: email};
-    console.log(query)
+    //console.log(query)
     db.User.findOne(query, function(err, user){
         if(err) throw err;
         if(!user){
@@ -55,7 +55,7 @@ passport.use('local-artist', new LocalStrategy({
    
 //sequalize serialize and deserialize the user to keep auth state across HTTP requests
 passport.serializeUser(function(user, done){
-    console.log(`Serialized User: ${user}`)
+    //console.log(`Serialized User: ${user}`)
     done(null, user);
  });
 
