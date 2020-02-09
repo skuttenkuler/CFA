@@ -98,8 +98,8 @@ function handleUserLogin(event){
     }).then(
         function(response) {
             if(response) {
-                console.log(response);
-                return
+                console.log("logged in");
+                location.replace('/user')
             }
         });
     }

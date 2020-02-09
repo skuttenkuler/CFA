@@ -87,5 +87,21 @@ app.post("/api/artists/register", (req, res) => {
             }
 
                                                                             
-    );                                                        
+    );
+    //user login         
+    app.post("/api/users/login", 
+        passport.authenticate('local-user', 
+            { failureRedirect: '/', session:true}),
+            function(req, res){
+                console.log(req.session.user.name)
+                req.session.save(() => {
+                    console.log("rediredct")
+                    res.redirect("/user")
+
+                })
+              
+            }
+
+                                                                            
+    );                                                           
 }

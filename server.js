@@ -44,7 +44,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // middleware to send user info to front end
 app.use((req, res, next) => {
 	
-	if (req.session && req.user) {
+	if (req.session && req.user.type === 'artist') {
 		db.Artist.findOne({
 			where: { id: req.user.id }
 		}).then((user, err) => {
@@ -58,7 +58,20 @@ app.use((req, res, next) => {
       
 			next();
 		});
-	} else {
+	} else if(req.session && req.user.type === 'user') {
+		db.User.findOne({
+			where: { id: req.user.id }
+		}).then((user, err) => {
+			if (err) {
+				console.log(err);
+      }
+      console.log(req.session.user)
+			req.user = user;
+			req.session.user = user;  //refresh the session value
+      res.locals.user = user;
+      
+			next();
+		});}else {
 		next();
 	}
 });

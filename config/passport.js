@@ -4,15 +4,18 @@ const bcrypt = require('bcryptjs');
 var db = require("../models/");
 
 //passport validation and authentication
-passport.use('user', new LocalStrategy({
-    }, function(email, password, done){
-    var query = {email: email};
-    //console.log(query)
-    db.User.findOne(query, function(err, user){
-        if(err) throw err;
-        if(!user){
-            return done(null, false);
-        }
+passport.use('local-user', new LocalStrategy({
+    usernameField: "email",
+    passwordField: "password",
+    passReqToCallback: true,
+    }, function(req, email, password, done){
+        db.User.findOne({
+            where: {
+                email: req.body.email
+            }}).then(function(user){
+                if(!user){
+                    return done(null, false);
+                }
         bcrypt.compare(password, user.password,  function(err,result){
             if(err) throw err;
             if(result){
@@ -23,6 +26,8 @@ passport.use('user', new LocalStrategy({
         })
     })
 }))
+
+
 passport.use('local-artist', new LocalStrategy({
     usernameField: "email",
     passwordField: "password",

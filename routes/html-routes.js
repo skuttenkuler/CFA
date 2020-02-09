@@ -13,9 +13,9 @@ module.exports = function(app) {
         res.sendFile(path.join(__dirname, '../public/signupArtist.html'));
     })
 
-    // app.get('/user', (req,res) => {
-    //     res.sendfile(path.join(__dirname + "../../public/user.html"));
-    // })
+    app.get('/user', (req,res) => {
+        res.sendFile(path.join(__dirname + "../../public/user.html"));
+    })
     app.get('/admin', (req,res) => {
         res.sendFile(path.join(__dirname + "../../public/admin.html"));
     })
