@@ -12,7 +12,7 @@ router.route("/login").post((req, res) => {
 });
 
 // SIGNUP ROUTE
-router.route("/signup").post((req, res) => {
+router.route("/usersignup").post((req, res) => {
   usersController.signUp(req, res);
 });
 
