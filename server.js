@@ -1,32 +1,37 @@
-//install packages
 const express = require("express");
 var cors = require("cors");
 var jwt = require('express-jwt');
-const routes = require('./routes');
+const mongoose = require("mongoose");
+const routes = require("./routes");
 const app = express();
-const bodyParser = require('body-parser')
-const PORT = process.env.PORT || 3000;
+require("dotenv").config();
+const PORT = process.env.PORT || 3001;
 
-//parser
+// Define middleware here
 app.use(cors());
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-//set PORT
+// Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("public"));
+}
+// Add routes, both API and view
+app.use(routes);
+app.use('/api', jwt({secret: process.env.SERVER_SECRET}));
+// Error handling
+app.use(function(err, req, res, next) {
+  if (err.name === "UnauthorizedError") {
+    // Send the error rather than to show it on the console
+    res.status(401).send(err);
+  } else {
+    next(err);
+  }
+});
 
-const db = require("./models");
+// Connect to the Mongo DB
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/reactcms");
 
-app.use(routes)
-
-
-//use static files
-app.use(express.static("public"));
-
-
-
-db.sequelize.sync().then(function() {
-    app.listen(PORT, function() {
-      console.log('Server listening on: http://localhost: ' + PORT);
-    });
-  });
-
+// Start the API server
+app.listen(PORT, function() {
+  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+});
