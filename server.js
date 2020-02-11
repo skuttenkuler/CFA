@@ -1,76 +1,37 @@
-//install packages
 const express = require("express");
+var cors = require("cors");
+var jwt = require('express-jwt');
+const mongoose = require("mongoose");
+const routes = require("./routes");
 const app = express();
-const session = require('express-session')
-const passport = require('passport')
-const bodyParser = require('body-parser')
-var expressValidator = require('express-validator');
-const Store = require("express-mysql-session")(session);
+require("dotenv").config();
+const PORT = process.env.PORT || 3001;
 
-//set PORT
-const PORT = process.env.PORT || 3000;
-
-const db = require("./models");
-
-//sql session
-//production jaws db
-var sqlStore = new Store ({
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: "password",
-  database: "cfa_db"
-});
-
-
-//parser
-app.use(express.urlencoded({ extended: true}));
+// Define middleware here
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(expressValidator());
-
-
-//use static files
-app.use(express.static("public"));
-//required for passport
-app.use(session({ store: sqlStore, 
-                  secret: "concerts for all",
-                  resave: true,
-                  saveUninitialized: true,
-                  cookie : {secure:false} }));
-app.use(passport.initialize());
-app.use(passport.session());//persistant logins
-app.use(bodyParser.urlencoded({ extended: false }));
-///
-// middleware to send user info to front end
-app.use((req, res, next) => {
-	
-	if (req.session && req.user) {
-		db.Artist.findOne({
-			where: { id: req.user.id }
-		}).then((user, err) => {
-			if (err) {
-				console.log(err);
-      }
-      console.log(req.session.user)
-			req.user = user;
-			req.session.user = user;  //refresh the session value
-      res.locals.user = user;
-      
-			next();
-		});
-	} else {
-		next();
-	}
+// Serve up static assets (usually on heroku)
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("public"));
+}
+// Add routes, both API and view
+app.use(routes);
+app.use('/api', jwt({secret: process.env.SERVER_SECRET}));
+// Error handling
+app.use(function(err, req, res, next) {
+  if (err.name === "UnauthorizedError") {
+    // Send the error rather than to show it on the console
+    res.status(401).send(err);
+  } else {
+    next(err);
+  }
 });
-//ROUTES
-require('./routes/html-routes')(app)
-require('./routes/api-routes.js')(app);
-require('./routes/passport-routes')(app)
 
+// Connect to the Mongo DB
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/reactcms");
 
-db.sequelize.sync().then(function() {
-    app.listen(PORT, function() {
-      console.log('Server listening on: http://localhost: ' + PORT);
-    });
-  });
-
+// Start the API server
+app.listen(PORT, function() {
+  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+});

@@ -1,35 +1,15 @@
-module.exports = function(sequelize, DataTypes) {
-    var Concert = sequelize.define("Concert", {
-        id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            primaryKey: true,
-            autoIncrement: true
-        },
-        venue: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                len:[3,100]
-            }
-        },
-        date: {
-            type: DataTypes.STRING,
-            allowNull:false,
-            validate: {
-                len:[7]
-            }
-        }
-        
-    });
-    Concert.associate = function(models) {
-        Concert.belongsTo(models.Artist, 
-            { onDelete: "CASCADE"});
-        Concert.hasOne(models.Ticket)
-    }
-    return Concert;
-}
+//CONCERT MODEL
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-//artist can have many concerts//
-//concert has a ticket//
-//users have many tickets
+const concertSchema = new Schema({
+  artist: String,
+  location: String,
+  venue: String,
+  time: String,
+  post_date: { type: Date, default: Date.now }
+});
+
+const Concert = mongoose.model("Concert", concertSchema);
+
+module.exports = Concert;
