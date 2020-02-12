@@ -4,8 +4,7 @@ const express = require("express");
 var cors = require("cors");
 var jwt = require('express-jwt');
 const mongoose = require("mongoose");
-const routes = require("./routes");
-const htmlRoutes = require('./routes/html/html-routes')
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -19,8 +18,8 @@ if (process.env.NODE_ENV === "production") {
 }
 // Add routes, both API and view
 
-app.use(routes);
-app.use(htmlRoutes);
+//require("./routes/api-routes")(app);
+require("./routes/html-routes")(app);
 
 app.use('/api', jwt({secret: process.env.SERVER_SECRET}));
 // Error handling
