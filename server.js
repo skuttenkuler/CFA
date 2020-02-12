@@ -6,16 +6,17 @@ var jwt = require('express-jwt');
 const mongoose = require("mongoose");
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 // Define middleware here
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Serve up static assets (usually on heroku)
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("public"));
-}
+
+ if (process.env.NODE_ENV === "production") {
+  app.use(express.static(__dirname + "/public"));
+   }
 // Add routes, both API and view
 
 //require("./routes/api-routes")(app);

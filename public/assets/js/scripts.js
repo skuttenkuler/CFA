@@ -28,7 +28,7 @@ function handleArtistRegister(event){
         alert("Please fill out all fields");
         return
     }
-    $.ajax('/artistsignup', {
+    $.ajax('/api/artists/register', {
         data: {
             type: artistType.val().trim(),
             email: artistEmail.val().trim(),
