@@ -1,10 +1,12 @@
+require("dotenv").config();
+
 const express = require("express");
 var cors = require("cors");
 var jwt = require('express-jwt');
 const mongoose = require("mongoose");
-const routes = require("./routes/api");
+const routes = require("./routes");
+const htmlRoutes = require('./routes/html/html-routes')
 const app = express();
-require("dotenv").config();
 const PORT = process.env.PORT || 3001;
 
 // Define middleware here
@@ -17,8 +19,9 @@ if (process.env.NODE_ENV === "production") {
 }
 // Add routes, both API and view
 
-app.use(app.router);
-routes.initialize(app);
+app.use(routes);
+app.use(htmlRoutes);
+
 app.use('/api', jwt({secret: process.env.SERVER_SECRET}));
 // Error handling
 app.use(function(err, req, res, next) {
