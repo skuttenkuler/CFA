@@ -28,7 +28,7 @@ function handleArtistRegister(event){
         alert("Please fill out all fields");
         return
     }
-    $.ajax('/api/artists/register', {
+    $.ajax("/api/register-artist", {
         data: {
             type: artistType.val().trim(),
             email: artistEmail.val().trim(),
@@ -46,7 +46,7 @@ function handleUserRegister(event){
         alert("Please fill out all fields");
         return
     }
-    $.ajax('/usersignup', {
+    $.ajax('/api/register-user', {
         data: {
             type: userType.val().trim(),
             email: userEmail.val().trim(),
@@ -64,12 +64,14 @@ function handleArtistLogin(event){
         alert("Please fill out all fields");
         return
     }
-    $.ajax('/artistslogin', {
+    $.ajax('api/artists/login', {
+        
         data: {
             email: loginEmail.val().trim(),
             password: loginPass.val().trim(),
             
         },
+        
         type: "POST"
     }).then(
         function(response) {
@@ -88,7 +90,7 @@ function handleUserLogin(event){
         alert("Please fill out all fields");
         return
     }
-    $.ajax('/login', {
+    $.ajax('/api/users/login', {
         data: {
             email: loginEmail.val().trim(),
             password: loginPass.val().trim(),

@@ -3,25 +3,26 @@ const isAuthenticated = require("../config/isAuthenticated");
 const auth = require("../config/auth");
 
 
-// const usersController = require("../controllers/usersController");
-const artistsController = require("../controllers/usersController");
-// const concertsController = require("../controllers/concertsController");
+const usersController = require("../controllers/usersController");
+const artistsController = require("../controllers/artistsController");
+const concertsController = require("../controllers/concertsController");
 
 module.exports = function(app){
 // /////////////////////USER/////////////////////
 // // LOGIN ROUTE
 
-// app.get("/login", (req, res) => {
-//   auth
-//     .logUserIn(req.body.email, req.body.password)
-//     .then(dbUser => res.json(dbUser))
-//     .catch(err => res.status(400).json(err));
-// });
+app.post("/api/users/login", (req, res) => {
+  auth
+    .logUserIn(req.body.email, req.body.password)
+    .then(dbUser => res.json(dbUser))
+    .catch(err => res.status(400).json(err));
+});
 
-// // SIGNUP ROUTE
-// app.get("/usersignup", (req, res) => {
-//   usersController.signUp(req, res);
-// });
+// SIGNUP USERs
+app.post("/api/register-user", (req, res) => {
+  console.log("made it here")
+  usersController.signUp(req, res);
+});
 
 // // Any route with isAuthenticated is protected and you need a valid token
 // // to access
@@ -40,16 +41,25 @@ module.exports = function(app){
 /////////////////////ARTIST/////////////////////
 
 // LOGIN ROUTE
-app.get("/artistlogin",(req, res) => {
+app.post("/api/artists/login",(req, res) => {
+  console.log("here")
   auth
     .logArtistIn(req.body.email, req.body.password)
     .then(dbUser => res.json(dbUser))
     .catch(err => res.status(400).json(err));
+    console.log("all the way")
 });
 
 // SIGNUP ROUTE
-app.post("/api/artists/register",(req, res) => {
+app.post("/api/register-artist",(req, res) => {
+    console.log("pass1")
   artistsController.signUp(req, res);
+});
+
+// ADD CONCERT
+app.post("/api/concert",(req, res) => {
+  console.log("concert")
+concertsController.create(req, res);
 });
 
 // Any route with isAuthenticated is protected and you need a valid token
@@ -69,11 +79,11 @@ app.get("/:id",isAuthenticated, (req, res) => {
 // /////////////////////Concert/////////////////////
 
 
-// // Matches with "/api/products"
-// app
-//   .route("/")
-//   .get(concertsController.findAll)
-//   .post(concertsController.create);
+// Matches with "/api/products"
+app
+  .route("/api/concert")
+  .get(concertsController.findAll)
+
 
 
 

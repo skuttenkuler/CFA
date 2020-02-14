@@ -4,9 +4,10 @@ const Schema = mongoose.Schema;
 
 const ConcertSchema = new Schema({
   artist: String,
-  location: String,
   venue: String,
-  time: String,
+  city: String,
+  state: String,
+  date: String,
   post_date: { type: Date, default: Date.now }
 });
 

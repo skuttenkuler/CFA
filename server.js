@@ -14,15 +14,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Serve up static assets (usually on heroku)
 
- if (process.env.NODE_ENV === "production") {
   app.use(express.static(__dirname + "/public"));
-   }
+  
 // Add routes, both API and view
 
-//require("./routes/api-routes")(app);
 require("./routes/html-routes")(app);
+require("./routes/api-routes")(app);
 
-app.use('/api', jwt({secret: process.env.SERVER_SECRET}));
+app.use('/api', jwt({secret: "Cheese"}));
 // Error handling
 app.use(function(err, req, res, next) {
   if (err.name === "UnauthorizedError") {

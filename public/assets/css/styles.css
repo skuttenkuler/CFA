@@ -1,7 +1,7 @@
 
 .welcome{
     
-    background-image: url("../assets/images/Screen\ Shot\ 2020-02-05\ at\ 10.03.27\ PM.png");
+    background-image: url("../images/Screen\ Shot\ 2020-02-05\ at\ 10.03.27\ PM.png");
     background-size: cover;
 }
 .login{
@@ -14,7 +14,7 @@
 }
 /* userSignUp */
 .userSignup{
-    background-image: url("../assets/images/concert.png");
+    background-image: url("../images/concert.png");
     background-size: cover;
    
 }
@@ -25,7 +25,7 @@
 
 /* registerArtist */
 .artistReg{
-    background-image: url("../assets/images/cassettes.jpg");
+    background-image: url("../images/cassettes.jpg");
     background-size: cover;
 }
 .center-div{
