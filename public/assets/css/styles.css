@@ -37,3 +37,75 @@
 .artistReg h2, label{
     color: rgb(145, 196, 255);
 }
+
+.user{
+    background-image: url(https://diy-magazine.s3.amazonaws.com/d/diy/Artists/R/Run-The-Jewels/31-03-17-Manchester/RTJ-March-31-Albert-Hall-Leah-Henson9.jpg);
+    background-size: cover ;
+}
+
+/* CONCERT BLOCK */
+
+body {
+    background-color: #436ea5;
+  }
+  
+  .ticket {
+    font-family: sans-serif;
+    background-image: url(https://images.unsplash.com/photo-1550184658-ff6132a71714?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2180&q=80);
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: 100%;
+    background-color: #04030C;
+    width: 700px;
+    height: 300px;
+    border-radius: 15px;
+    -webkit-filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
+              filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3)); 
+    display: block;
+    margin: 10% auto auto auto;
+    color: #fff;;
+  }
+  
+  .date {
+    margin: 15px;
+    -webkit-filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
+              filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3)); 
+  }
+  .concerts-container{
+      list-style: none;
+  }
+  .userHeader{
+      color: azure;
+  }
+  .date .datetime {
+    float: left;
+    margin: 15px 0 0 0;
+    font-weight: bold;
+  }
+  
+  .artist {
+    font-size: 30px;
+    margin: 10px 100px 0 40px;
+    float: left;
+    font-weight: bold;
+    -webkit-filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
+              filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3)); 
+  }
+  
+  .location {
+    float: left;
+    margin: 135px 0 0 78px;
+    font-size: 30px;
+    font-weight: bold;
+    -webkit-filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
+              filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3)); 
+  }
+
+  
+  .venue {
+    font-weight: 200;
+  }
+  .ticket{
+      background-image: url(https://images.unsplash.com/photo-1550184658-ff6132a71714?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2180&q=80);
+  }
+  
